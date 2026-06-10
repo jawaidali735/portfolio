@@ -1,24 +1,223 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark theme (default) — warm charcoal */
+  --bg: #0b0a09;
+  --surface: #141210;
+  --text: #f7f4f0;
+  --muted: #9a9088;
+  --line: rgba(255, 255, 255, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.015);
+  --card-bg-hover: rgba(255, 255, 255, 0.03);
+  --card-line-hover: rgba(255, 255, 255, 0.28);
+  --glass-bg: rgba(0, 0, 0, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --orb-highlight: rgba(255, 255, 255, 0.9);
+
+  --background: var(--bg);
+  --foreground: var(--text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html.light {
+  /* Light theme — warm off-white */
+  --bg: #f7f3ec;
+  --surface: #ffffff;
+  --text: #1a1714;
+  --muted: #6b6258;
+  --line: rgba(0, 0, 0, 0.12);
+  --card-bg: rgba(0, 0, 0, 0.015);
+  --card-bg-hover: rgba(0, 0, 0, 0.04);
+  --card-line-hover: rgba(0, 0, 0, 0.25);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --orb-highlight: rgba(255, 255, 255, 0.85);
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  transition: background 0.4s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family:"", Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--font-inter), Inter, Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Scrollbar — thin, subtle */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#ff7a1a, #ff5e3a);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff7a1a;
+}
+
+::selection {
+  background: #ff7a1a;
+  color: #0b0a09;
+}
+
+/* ---- Gradient text (used sparingly) ---- */
+.text-gradient {
+  background: linear-gradient(100deg, #ffb872 0%, #ff7a1a 50%, #ff5e3a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ---- Tight display heading helper ---- */
+.h-display {
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  font-weight: 600;
+}
+
+/* ---- Mono editorial label ---- */
+.label-mono {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---- Thin hairline border card (minimal) ---- */
+.line-card,
+.glass-card {
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  border-radius: 1.25rem;
+  transition: border-color 0.4s ease, background 0.4s ease,
+    transform 0.4s ease;
+}
+.line-card:hover,
+.glass-card:hover {
+  border-color: var(--card-line-hover);
+  background: var(--card-bg-hover);
+  transform: translateY(-3px);
+}
+
+/* ---- Subtle glass (nav) ---- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+}
+
+/* ====================================================
+   3D GRADIENT ORB — hero focal point (pure CSS)
+   ==================================================== */
+.orb {
+  position: relative;
+  border-radius: 9999px;
+  background: radial-gradient(
+      circle at 32% 28%,
+      #fff6ec 0%,
+      #ffcf9e 12%,
+      #ff9a3d 32%,
+      #ff7a1a 50%,
+      #b3420a 74%,
+      #2a1206 100%
+    );
+  box-shadow: inset -22px -22px 60px rgba(0, 0, 0, 0.7),
+    inset 18px 18px 50px rgba(255, 224, 190, 0.25),
+    0 0 100px 12px rgba(255, 122, 26, 0.35);
+}
+/* swirling sheen layer */
+.orb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 184, 114, 0.4) 70deg,
+    transparent 150deg,
+    rgba(255, 94, 58, 0.35) 230deg,
+    transparent 320deg
+  );
+  mix-blend-mode: screen;
+  filter: blur(8px);
+  animation: orbSpin 24s linear infinite;
+}
+/* highlight dot */
+.orb::after {
+  content: "";
+  position: absolute;
+  top: 16%;
+  left: 22%;
+  width: 22%;
+  height: 22%;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.9),
+    transparent 70%
+  );
+  filter: blur(4px);
+}
+.orb-glow {
+  position: absolute;
+  inset: -30%;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 122, 26, 0.32),
+    transparent 60%
+  );
+  filter: blur(40px);
+  z-index: -1;
+}
+
+/* Marquee edge mask */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,26 +1,29 @@
-import '../app/globals.css';  // Ensure this path is correct
-
 import Hero from "./components/Hero";
+import Stats from "./components/Stats";
 import About from "./components/About";
-import Education from "./components/Education";
-import Skills from "./components/Skills";
-import Contact from "./components/Contact";
+import Services from "./components/Services";
 import Project from "./components/Project";
+import TechStack from "./components/TechStack";
+import Process from "./components/Process";
+import Testimonials from "./components/Testimonials";
+import FAQ from "./components/FAQ";
+import Contact from "./components/Contact";
+import ScrollProgress from "./components/ui/ScrollProgress";
 
-const webPage = () => {
-  return(
-    <div>
-      <Hero/>
-      <About/>
-      <Education/>
-      <Skills/>
-      <Project/>
-      <Contact/>
-      
-
-
-    </div>
-  )
-};
-
-export default webPage;
+export default function Home() {
+  return (
+    <main className="bg-space">
+      <ScrollProgress />
+      <Hero />
+      <Stats />
+      <About />
+      <Services />
+      <Project />
+      <TechStack />
+      <Process />
+      <Testimonials />
+      <FAQ />
+      <Contact />
+    </main>
+  );
+}

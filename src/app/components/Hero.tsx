@@ -1,107 +1,134 @@
 "use client";
-import { FaFacebookF } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaLinkedinIn } from "react-icons/fa";
-import { IoLogoGithub } from "react-icons/io";
-import Typewriter from "typewriter-effect";
 
-const Hero = () => {
+import { motion } from "framer-motion";
+import { TypeAnimation } from "react-type-animation";
+import { ArrowUpRight, Sparkles } from "lucide-react";
+import HeroConsole from "./ui/HeroConsole";
+
+export default function Hero() {
+  const scrollTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
   return (
-    <div
+    <section
       id="hero"
-      className="bg-banner font-sans bg-repeat flex bg-bottom w-full h-screen xs:pt-0 bg-cover text-white xs:overflow-x-hidden"
+      className="relative flex min-h-screen w-full items-center overflow-hidden bg-space"
     >
-      <div className="space-y-0.5 xs:space-y-4 xs:space-x-2 xs:flex xs:flex-col xs:justify-center xs:items-center xs:w-full xs:p-2 w-1/2 pl-32 pt-44 xs:pt-36 xs:text-center">
-        <h1 className="font-bold xs:text-[2.6rem] text-[2.6rem]">
-          Hi, I&apos;m{" "}
-          <span className="xs:whitespace-nowrap text-[#00abcf]">Jawaid Ali</span>
-        </h1>
+      {/* warm ambient glows */}
+      <div className="pointer-events-none absolute -right-32 top-10 h-[60vh] w-[60vh] rounded-full bg-indigo opacity-20 blur-[120px]" />
+      <div className="pointer-events-none absolute -left-32 bottom-0 h-[45vh] w-[45vh] rounded-full bg-coral opacity-10 blur-[120px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,var(--bg)_100%)]" />
 
-        <div className="text-[32px] font-semibold text-[#00abcf] xs:text-[30px]">
-          <Typewriter
-            options={{
-              strings: [
-                "A Web Developer",
-                "Content Creator",
-                "Blogger",
-                " & Web Designer.",
-              ],
-              autoStart: true,
-              loop: true,
-            }}
-          />
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-6 pt-32 pb-20 lg:grid-cols-12 lg:px-10">
+        {/* Left */}
+        <div className="lg:col-span-7">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 rounded-full border border-indigo/30 bg-indigo/10 px-4 py-1.5 text-sm text-text"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo" />
+            </span>
+            Available for freelance &amp; full-time
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="h-display mt-7 text-[3.25rem] text-text sm:text-7xl lg:text-[5.4rem]"
+          >
+            I build <span className="text-gradient">AI agents</span>
+            <br />
+            that ship to
+            <br />
+            production.
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mt-7 flex items-center gap-3 font-mono text-sm text-muted sm:text-base"
+          >
+            <Sparkles size={18} className="shrink-0 text-indigo" />
+            <TypeAnimation
+              sequence={[
+                "autonomous agent systems",
+                2000,
+                "RAG chatbots over your data",
+                2000,
+                "multi-agent orchestration",
+                2000,
+                "full-stack Next.js & TypeScript",
+                2000,
+                "OpenAI & LangChain pipelines",
+                2000,
+              ]}
+              wrapper="span"
+              speed={50}
+              repeat={Infinity}
+              className="text-text"
+            />
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="mt-7 max-w-lg text-base leading-relaxed text-muted"
+          >
+            I&apos;m Jawaid Ali — an AI Agent &amp; Full-Stack Developer. I design and
+            ship intelligent agents, RAG-powered chatbots, and modern web apps
+            with Next.js &amp; databases. From idea to launch.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            className="mt-9 flex flex-wrap items-center gap-4"
+          >
+            <button
+              onClick={() => scrollTo("projects")}
+              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo to-coral px-7 py-3.5 text-sm font-semibold text-white shadow-glow transition-transform hover:scale-[1.03]"
+            >
+              View my work
+              <ArrowUpRight
+                size={16}
+                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </button>
+            <button
+              onClick={() => scrollTo("contact")}
+              className="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-sm font-medium text-text transition-colors hover:border-indigo/60"
+            >
+              Start a project
+            </button>
+          </motion.div>
         </div>
 
-        <p className="pt-4 text-sm">
-          I&apos;m a dedicated developer passionate about crafting innovative
-          solutions. With expertise in HTML, CSS, TypeScript, I thrive on
-          tackling challenges and bringing ideas to life through code. Let&apos;s
-          build something amazing!
-        </p>
-
-        <div className="space-x-8 pt-8">
-          <button
-            onClick={() =>
-              (window.location.href =
-                "https://www.linkedin.com/in/jawaidaliofficial/")
-            }
-            className="w-[100px] rounded-lg p-[4px] bg-[#00abcf] text-[#07151f] font-semibold hover:text-[#00abcf] hover:border-2 hover:border-[#00abcf] transition duration-300 hover:shadow-lg hover:shadow-blue-400 hover:bg-[#07151f]"
+        {/* Right — live AI agent console */}
+        <div className="relative flex justify-center lg:col-span-5">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
+            className="w-full max-w-md"
           >
-            Hire Me
-          </button>
-
-          <button
-            onClick={() =>
-              (window.location.href = "https://www.instagram.com/nawab_javedali/")
-            }
-            className="w-[100px] rounded-lg p-[3px] border-2 border-[#00abcf] text-[#00abcf] font-semibold hover:text-[#07151f] hover:border-2 hover:bg-[#00abcf] hover:border-[#00abcf] transition duration-300 hover:shadow-lg hover:shadow-blue-400"
-          >
-            Let&apos;s Talk
-          </button>
-        </div>
-
-        <div className="flex space-x-6 pt-20 xs:pt-28 text-[#00cbcf]">
-          <a
-            href="https://www.facebook.com/profile.php?id=100083658815943&mibextid=ZbWKwL"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border-2 border-[#00abcf] text-xs p-2 rounded-3xl hover:text-[#07151f] hover:bg-[#00abcf] transition duration-300 hover:shadow-lg hover:shadow-blue-400"
-          >
-            <FaFacebookF />
-          </a>
-
-          <a
-            href="https://www.instagram.com/nawab_javedali/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border-2 border-[#00abcf] text-xs p-2 rounded-3xl hover:text-[#07151f] hover:bg-[#00abcf] transition duration-300 hover:shadow-lg hover:shadow-blue-400"
-          >
-            <FaInstagram />
-          </a>
-
-          <a
-            href="https://www.linkedin.com/in/jawaidaliofficial/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border-2 border-[#00abcf] text-xs p-2 rounded-3xl hover:text-[#07151f] hover:bg-[#00abcf] transition duration-300 hover:shadow-lg hover:shadow-blue-400"
-          >
-            <FaLinkedinIn />
-          </a>
-
-          <a
-            href="https://github.com/jawaidali735"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border-2 border-[#00abcf] text-xs p-2 rounded-3xl hover:text-[#07151f] hover:bg-[#00abcf] transition duration-300 hover:shadow-lg hover:shadow-blue-400"
-          >
-            <IoLogoGithub />
-          </a>
+            <HeroConsole />
+          </motion.div>
         </div>
       </div>
 
-      <div className="mt-12 m-2 w-1/2 xs:w-0 hover:bg-[#030b10] hover:opacity-[.8] duration-300 animate-manip-active-hover delay-4s"></div>
-    </div>
+      {/* bottom scroll hint */}
+      <div className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-3 label-mono lg:flex">
+        <span className="h-8 w-px bg-card" />
+        Scroll
+      </div>
+    </section>
   );
-};
-
-export default Hero;
+}
